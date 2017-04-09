@@ -1,5 +1,6 @@
 package com.youmeek.ssm.module.user.controller;
 
+import com.wordnik.swagger.annotations.ApiOperation;
 import com.youmeek.ssm.module.user.pojo.SysUser;
 import com.youmeek.ssm.module.user.service.SysUserService;
 import org.slf4j.Logger;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -21,15 +23,16 @@ public class SysUserController {
 	
 	@Resource
 	private SysUserService sysUserService;
-	
-	@RequestMapping("/showUserToJspById/{userId}")
+
+	@ApiOperation(value = "注册", notes = "注册用户", position = 3)
+	@RequestMapping(value="/showUserToJspById/{userId}", method = RequestMethod.POST)
 	public String showUser(Model model,@PathVariable("userId") Long userId){
 		SysUser user = this.sysUserService.getById(userId);
 		model.addAttribute("user", user);
 		return "showUser";
 	}
 	
-	@RequestMapping("/showUserToJSONById/{userId}")
+	@RequestMapping(value="/showUserToJSONById/{userId}", method = RequestMethod.POST)
 	@ResponseBody
 	public SysUser showUser(@PathVariable("userId") Long userId){
 		SysUser user = sysUserService.getById(userId);
@@ -37,16 +40,16 @@ public class SysUserController {
 	}
 	
 	
-	@RequestMapping("/test-logback")
-	@ResponseBody
-	public Date testLogback(){
-		LOG.trace("-----------------------------------trace");
-		LOG.debug("-----------------------------------debug");
-		LOG.info("-----------------------------------info");
-		LOG.warn("-----------------------------------warn");
-		LOG.error("-----------------------------------error");
-		return new Date();
-	}
+//	@RequestMapping("/test-logback")
+//	@ResponseBody
+//	public Date testLogback(){
+//		LOG.trace("-----------------------------------trace");
+//		LOG.debug("-----------------------------------debug");
+//		LOG.info("-----------------------------------info");
+//		LOG.warn("-----------------------------------warn");
+//		LOG.error("-----------------------------------error");
+//		return new Date();
+//	}
 	
 
 
